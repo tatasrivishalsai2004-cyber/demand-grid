@@ -1,0 +1,3 @@
+{"name":"demandgrid","private":true,"scripts":{"dev":"next dev","build":"prisma generate && next build","start":"next start","db:push":"prisma db push","db:seed":"tsx prisma/seed.ts","test":"tsx lib/forecast.test.ts"},
+"dependencies":{"next":"^14.2.0","react":"^18.3.0","react-dom":"^18.3.0","@prisma/client":"^5.20.0","zod":"^3.23.0"},
+"devDependencies":{"prisma":"^5.20.0","typescript":"^5.5.0","tsx":"^4.19.0","@types/node":"^20","@types/react":"^18"}}
