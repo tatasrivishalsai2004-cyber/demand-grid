@@ -1,9 +1,28 @@
-generator client { provider = "prisma-client-js" }
-datasource db { provider = "postgresql"
-  url = env("DATABASE_URL") }
+generator client {
+  provider = "prisma-client-js"
+}
 
-enum Role { RETAILER SUPPLIER MANUFACTURER ADMIN }
-enum POStatus { PENDING CONFIRMED SHIPPED DELIVERED CANCELLED }
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  RETAILER
+  SUPPLIER
+  MANUFACTURER
+  ADMIN
+}
+
+enum POStatus {
+  PENDING
+  CONFIRMED
+  SHIPPED
+  DELIVERED
+  RECEIVED
+  PARTIAL
+  CANCELLED
+}
 
 // Store = tenant. Every retailer table carries storeId; ALWAYS filter by it.
 model Store {
@@ -129,6 +148,7 @@ model PurchaseOrderItem {
   productId String
   qty Int
   price Decimal @db.Decimal(10,2)
+  receivedQty Int?
   order PurchaseOrder @relation(fields: [orderId], references: [id])
 }
 model Forecast {
@@ -184,4 +204,14 @@ model AuditLog {
   action String
   meta Json?
   createdAt DateTime @default(now())
+}
+model SupplierReview {
+  id String @id @default(cuid())
+  storeId String
+  supplierId String
+  orderId String @unique
+  rating Int
+  comment String?
+  createdAt DateTime @default(now())
+  @@index([supplierId])
 }
